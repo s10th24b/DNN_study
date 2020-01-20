@@ -1,0 +1,13 @@
+import tensorflow as tf
+
+# Create a constant op
+# This op is added as a node to the default graph
+
+print(tf.__version__)
+hello = tf.constant("Hello, Tensorflow!")
+
+# start a TF session
+sess = tf.session()
+
+# run the op and get result
+print(sess.run(hello))
