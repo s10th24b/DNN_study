@@ -293,3 +293,4 @@ if select == 0 or select == 5:
         )
     print("answer:",sess.run(tf.argmax(mnist.test.labels[r : r + 1],-1)))
     plt.show()
+
