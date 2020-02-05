@@ -4,8 +4,10 @@ from sklearn.preprocessing import MinMaxScaler
 
 x_train = [[1,2,1],[1,3,2],[1,3,4],[1,5,5],[1,7,5],[1,2,5],[1,6,6],[1,7,7]]
 scaled_x_train = MinMaxScaler(x_train)
+print("scaled_x_train:",scaled_x_train)
 y_train = [[0,0,1],[0,0,1],[0,0,1],[0,1,0],[0,1,0],[0,1,0],[1,0,0],[1,0,0]]
 scaled_y_train = MinMaxScaler(y_train)
+print("scaled_y_train:",scaled_y_train)
 
 x_test = [[2,1,1],[3,1,2],[3,3,4]]
 scaled_x_test = MinMaxScaler(x_test)

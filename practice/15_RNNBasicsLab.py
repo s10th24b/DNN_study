@@ -14,7 +14,7 @@ import numpy as np
 # state값은 우리가 직접 사용할 일은 많지 않고 주로 이 아웃풋을 사용하게 된다.
 # 이렇게 나눈 이유는 셀을 생성하는 부분과 셀을 학습시키는 부분을 나누려고 한 것.
 # 예를 들어 LSTM으로 바꾸고 싶으면 학습부분은 그대로 두고,
-# cell = tf.contrib.rnn.BasicRNNCell(num_units=hidden_size)
+# cell = tf.contrib.rnn.BasicLSTMcell(num_units=hidden_size)
 # 로 바꾸면 된다!
 
 #############################################3
@@ -32,8 +32,8 @@ outputs, _states = tf.nn.dynamic_rnn(cell,x_data,dtype=tf.float32)
 
 sess.run(tf.global_variables_initializer())
 print("x_data:",x_data)
-print("outputs:",sess.run(outputs))
 print("x_data.shape:",x_data.shape)
+print("outputs:",sess.run(outputs))
 print("outputs.shape:",outputs.shape)
 print("_states:",sess.run(_states))
 
@@ -50,10 +50,10 @@ e = [0,1,0,0]
 l = [0,0,1,0]
 o = [0,0,0,1]
 
-x_data = np.array([[h,e,l,l,o], #hello
-                    [e,o,l,l,l], #eolll
-                    [l,l,e,e,l]], #lleel
-                    dtype=np.float32)
+x_data = np.array([[h,e,l,l,o], # hello
+                   [e,o,l,l,l], # eolll
+                   [l,l,e,e,l]], # lleel
+                  dtype=np.float32)
 # input dimension: (3,5,4) output_dimension: (3,5,2)
 
 outputs, _states = tf.nn.dynamic_rnn(cell,x_data,dtype=tf.float32)
@@ -63,3 +63,4 @@ print("outputs:",sess.run(outputs))
 print("x_data.shape:",x_data.shape)
 print("outputs.shape:",outputs.shape)
 print("_states:",sess.run(_states))
+print("_states.shape:",sess.run(_states).shape)

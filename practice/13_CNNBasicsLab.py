@@ -105,6 +105,7 @@ pool = tf.nn.max_pool(conv2d,ksize=[1,2,2,1],strides=[1,2,2,1],padding='SAME')
 print("pool:",pool)
 pool_img = pool.eval(session=sess)
 pool_img = np.swapaxes(pool_img,0,3)
+print("pool_img.shape:",pool_img.shape)
 print("pool_img",pool_img)
 for i, one_img in enumerate(pool_img):
     plt.subplot(1,5,i+1),plt.imshow(one_img.reshape(7,7),cmap='gray')

@@ -51,7 +51,8 @@ with tf.Session() as sess:
     print("new_predicted:",new_predicted)
     for i in range(len(predicted)):
         temp = predicted[i]
-        print("predicted[i]:",predicted[i])
+        # print("predicted[i]:",predicted[i])
+        print("predicted[{0}]: {1}".format(i,predicted[i]))
         new_predicted[i] = np.zeros(3)
         new_predicted[i][temp]+=1
     print("reshaped one-hot encoded predicted:",new_predicted)

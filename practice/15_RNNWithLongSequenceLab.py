@@ -36,6 +36,7 @@ print("x_data:", x_data)
 print("y_data:", y_data)
 print("X_one_hot:", sess.run(X_one_hot, feed_dict={X: x_data}))
 print("X_max:", sess.run(tf.argmax(X_one_hot, -1), feed_dict={X: x_data}))  # (= x_data)
+print("X_one_hot(squeeze):", np.squeeze(sess.run(X_one_hot, feed_dict={X: x_data})))
 # printing by khj ###
 
 cell = tf.contrib.rnn.BasicLSTMCell(num_units=rnn_hidden_size, state_is_tuple=True)  # output size = one-hot size
@@ -43,6 +44,7 @@ initial_state = cell.zero_state(batch_size, tf.float32)
 outputs, _states = tf.nn.dynamic_rnn(cell, X_one_hot, initial_state=initial_state, dtype=tf.float32)
 # cell, X_one_hot,initial_state,dtype)
 weights = tf.ones([batch_size, sequence_length])
+print("weights:",sess.run(weights))
 sequence_loss = tf.contrib.seq2seq.sequence_loss(logits=outputs, targets=Y, weights=weights)
 loss = tf.reduce_mean(sequence_loss)
 optimizer = tf.train.AdamOptimizer(learning_rate=0.1).minimize(sequence_loss)
@@ -51,15 +53,17 @@ prediction = tf.argmax(outputs, axis=-1)
 # 이제 학습해야지.
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    # for i in range(1000):
-    for i in range(10):
+    # for i in range(10):
+    for i in range(20):
         l, _ = sess.run([loss, optimizer], feed_dict={X: x_data, Y: y_data})
-        # print("loss:", l)
-        result, outputs_res = sess.run([prediction, outputs], feed_dict={X: x_data})
+        print("loss:", l)
+        result, outputs_res, weights_res = sess.run([prediction, outputs, weights], feed_dict={X: x_data})
         print("outputs_res:", outputs_res)
         print("outputs_res.shape:", outputs_res.shape)
         print("output_res -> result:", result)
+        print("result.shape:", result.shape)
         print("np.squeeze(result):", np.squeeze(result))
+        print("weights_res:", weights_res)
         result_str = [idx2char[c] for c in np.squeeze(result)]
         print("result_str:", result_str)
 

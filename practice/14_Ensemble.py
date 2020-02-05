@@ -3,7 +3,7 @@ import numpy as np
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 # 모델 여러개를 조합해서 조화롭게.
-# 독립된 모델 여러개를 훈련시키고 
+# 독립된 모델 여러개를 훈련시키고
 # 학습데이터가 들어오면 각각 모델을 예측시키고 그 결과를 어떤방법으로 조합.
 # 그 최종결과 내놓으면 좋은 성능을 내놓더라.
 # 이걸 만드려면?
@@ -71,10 +71,10 @@ class Model:
 
     def predict(self,x_test,training=False):
         return self.sess.run(self.logits,feed_dict={self.X:x_test,self.training:training})
-    
+
     def get_accuracy(self,x_test,y_test,training=False):
         return self.sess.run(self.accuracy,feed_dict={self.X:x_test,self.Y:y_test,self.training:training})
-    
+
     def train(self,x_data,y_data,training=True):
         return self.sess.run([self.cost,self.optimizer],feed_dict={self.X:x_data,self.Y:y_data,self.training:training})
 
@@ -82,7 +82,7 @@ models = []
 num_models = 10
 num_classes = 10
 learning_rate = 0.001
-training_epochs = 10
+training_epochs = 1
 batch_size = 100
 sess = tf.Session()
 for m in range(num_models):
@@ -115,8 +115,11 @@ predictions = np.zeros(test_size*num_classes).reshape(test_size,num_classes)
 for m_idx, m in enumerate(models):
     print(m_idx,"Accuracy:",m.get_accuracy(mnist.test.images,mnist.test.labels))
     p = m.predict(mnist.test.images)
+    print("p:",p)
     predictions+=p
 print("predictions:",predictions)
+print("predictions.shape:",predictions.shape)
+print("mnist.test.labels.shape:",mnist.test.labels.shape)
 ensemble_correct_prediction = tf.equal(tf.argmax(predictions,1),tf.argmax(mnist.test.labels,1))
 ensemble_accuracy = tf.reduce_mean(tf.cast(ensemble_correct_prediction,dtype=tf.float32))
 print("Ensemble Acc:",sess.run(ensemble_accuracy))

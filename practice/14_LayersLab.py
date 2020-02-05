@@ -1,11 +1,13 @@
 import tensorflow as tf
 
+X = tf.placeholder([None,784],tf.float32)
+X_img = X.reshape([-1,28,28,1])
 # Convolution
 W1 = tf.Variable(tf.random.normal([3,3,1,32],stddev=0.01))
 L1 = tf.nn.conv2d(X_img,W1,strides=[1,1,1,1],padding='SAME')
 L1 = tf.nn.relu(L1)
 # ->
-conv1 = tf.layers.conv2d(inupts=X_img, filters=32, kernel_size=[3,3], padding="SAME", activation=tf.nn.relu)
+conv1 = tf.layers.conv2d(inputs=X_img, filters=32, kernel_size=[3,3], padding="SAME", activation=tf.nn.relu)
 # input, filters, kernel_size, padding, activation
 
 # Pooling

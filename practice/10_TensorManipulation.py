@@ -11,10 +11,10 @@ print(t[2:5],t[4:-1])
 print(t[:2],t[3:])
 
 t = np.array([[1.,2.,3.],[4.,5.,6.],[7.,8.,9.],[10.,11.,12.]])
-print(t.ndim) #rank
-print(t.shape) #shape
+print(t.ndim) # rank
+print(t.shape) # shape
 
-#shape, rank, axis(축)
+# shape, rank, axis(축)
 # rank는 array의 처음 시작하는 대괄호가 몇개인지 세면 된다.
 # 한편, rank가 3이라면, shape는 (?,?,?) 이렇게 생겼을텐데, 일단 맨 마지막거는 가장 안쪽 bracket의 엘리먼트 개수.
 # 이렇게 뒤에서부터 세어나가면 된다.
@@ -27,7 +27,7 @@ with sess.as_default():
     t = tf.constant([[1,2],
                  [3,4]])
     print(tf.shape(t).eval())
-    # -> [2, 2] 
+    # -> [2, 2]
 
     rank = 4
     if rank == 4:
@@ -73,7 +73,7 @@ with sess.as_default():
     print("reduce_mean(reduce_sum):",tf.reduce_mean(tf.reduce_sum(x,axis=-1)).eval()) #가장 많이 쓰는 형식. 제일 안쪽을 다 더해서 평균내는.
     # 왜 많이 쓰는고 하니, 가장 안쪽거가 실제 atomic 데이터일 확률이 높기 때문에(뇌피셜), 이렇게 편리하게 쓰는듯.
     y=[[[1.],[2.],[3.],[4.],[5.]]]
-    print("reduce_sum:",tf.reduce_sum(y,axis=-1).eval()) #axis -1? 가장 안쪽을 평균화해라. 
+    print("reduce_sum:",tf.reduce_sum(y,axis=-1).eval()) #axis -1? 가장 안쪽을 평균화해라.
     # y 그대로 나온다
 
 
@@ -102,10 +102,12 @@ with sess.as_default():
     print("expand_dims:",tf.expand_dims([0,1,2],1).eval()) #여기에 차원을 추가하고 싶으면 뒤에 숫자넣음.
 
     # One hot
-    print("one_hot:",tf.one_hot([[0],[1],[2],[0]],depth=3).eval()) #총 클래스가 몇개인지가 바로 depth. 010 이렇게 된 array를 아래로 늘어뜨린걸 상상.
+    t = tf.one_hot([[0],[1],[2],[0]],depth=3)
+    print("one_hot:",t.eval()) #총 클래스가 몇개인지가 바로 depth. 010 이렇게 된 array를 아래로 늘어뜨린걸 상상.
     # one_hot에 넣을때만 해도 rank가 2였는데, one_hot을 거치니 rank가 3으로 늘어났다. 자동으로 하나 더 expand를 하게된다.
     t = tf.reshape(t,shape=[-1,3]).eval() #그게 싫으면 reshape
     print("after tf.reshape t:",t)
+    print("after squeeze t:",tf.squeeze(t).eval())
 
     # Casting
     print("cast:",tf.cast([1.8,2.2,3.3,4.9],tf.int32).eval())
@@ -122,7 +124,7 @@ with sess.as_default():
     print("stack axis0:",tf.stack([x,y,z],axis=0).eval())
     print("stack axis1:",tf.stack([x,y,z],axis=1).eval())
     print("stack axis-1:",tf.stack([x,y,z],axis=-1).eval())
-    
+
     # Ones and Zeros like
     x = [[0,1,2],
          [2,1,0]]

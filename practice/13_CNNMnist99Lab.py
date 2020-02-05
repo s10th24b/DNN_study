@@ -7,6 +7,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 X = tf.placeholder(tf.float32,[None,784])
 X_img = tf.reshape(X,[-1,28,28,1]) # img 28x28x1 (black/white)
+print("X_img.shape:",X_img.shape)
 Y = tf.placeholder(tf.float32,[None,10])
 
 # L1 ImgIn shape = (?, 28, 28, 1)
@@ -39,7 +40,7 @@ L2 = tf.reshape(L2,[-1,7*7*64])
 # Reshape: (?,3136)
 # 이렇게 feature의 개수를 확 늘였다.
 
-W3 = tf.get_variable("W2",shape=[7*7*64,10],initializer = tf.contrib.layers.xavier_initializer())
+W3 = tf.get_variable("W3",shape=[7*7*64,10],initializer=tf.contrib.layers.xavier_initializer())
 b = tf.Variable(tf.random.normal([10]))
 hypothesis = tf.matmul(L2,W3)+b
 learning_rate = 0.001
@@ -47,7 +48,7 @@ training_epochs = 15
 batch_size = 100
 
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=hypothesis,labels=Y))
-optimizer = tf.train.AdamOptimizer(learning_rate = learning_rate).minimize(cost)
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
@@ -60,7 +61,7 @@ for epoch in range(training_epochs):
         batch_xs,batch_ys = mnist.train.next_batch(batch_size)
         feed_dict = {X:batch_xs,Y:batch_ys}
         c,_ = sess.run([cost,optimizer],feed_dict=feed_dict)
-        avg_cost +=c/total_batch
+        avg_cost += c/total_batch
     print("Epoch:",epoch,"cost:",avg_cost)
 print("Learning Finished!")
 
