@@ -83,13 +83,13 @@ sess.run(tf.global_variables_initializer())
 
 for i in range(1000):
     _, l = sess.run([train,loss], feed_dict={X:trainX, Y:trainY})
-    print("i: {0}, l: {1}".format(i, l))
+    # print("i: {0}, l: {1}".format(i, l))
 testPredict = sess.run(Y_pred, feed_dict={X: testX})
 
 import matplotlib.pyplot as plt
 plt.plot(testY)
 plt.plot(testPredict)
-print("testY:",testY)
+# print("testY:",testY)
 print("testY.shape:",testY.shape)
 print("testPredict.shape:",testPredict.shape)
 plt.show()
